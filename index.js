@@ -1,7 +1,8 @@
 const express = require('express');
-const { faker } = require('@faker-js/faker');
-
 const useRouter = require('./routes');
+
+const { logErrors, errorHandler, boomErrorHandler } = require('./middleware/error.handler');
+const { get } = require('./routes/products');
 
 const app = express();
 const port = 3000;
@@ -14,6 +15,9 @@ app.get('/', (req, res) => {
 
 useRouter(app);
 
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 // Open server
 app.listen(port, () => {
