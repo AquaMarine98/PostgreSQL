@@ -33,26 +33,48 @@ class ProductService {
   }
 
   find(filter) {
-    if (filter !== null) {
-      const filterList = [];
-      this.products.map((item) => { 
-        if(item.name === filter || item.price == filter) {
-            filterList.push(item);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (filter !== null) {
+          const filterList = [];
+          this.products.map((item) => { 
+            if(item.name === filter || item.price == filter) {
+                filterList.push(item);
+            }
+          });
+          resolve(filterList);
+        } else {
+          resolve(this.products);
         }
-      });
-      return filterList;
-    } else {
-      return this.products;
-    }
+      }, 3000);
+    })
   }
 
-  findOne(id) {
+  async findOne(id) {
     return this.products.find((item) => item.id === id);
   }
 
-  update() {}
+  async update(id, changes) {
+    const index = this.products.findIndex((item) => item.id === id);
+    if(index === -1) {
+      throw new Error('Product not found');
+    }
+    const product = this.products[index];
+    this.products[index] = {
+      ...product,
+      ...changes
+    };
+    return this.products[index];
+  }
 
-  delete() {}
+  async delete(id) {
+    const index = this.products.findIndex((item) => item.id === id);
+    if(index === -1) {
+      throw new Error('Product not found');
+    }
+    this.products.splice(index, 1);
+    return { id };
+  }
 }
 
 module.exports = ProductService;

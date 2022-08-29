@@ -11,14 +11,14 @@ const service = new ProductService();
     res.json(products);
 }); */
 
-router.get('/', (req, res) => {
+router.get('/', async(req, res) => {
     const filter = req.query.name || req.query.price || null;
-    const products = service.find(filter);
+    const products = await service.find(filter);
 
     res.json(products);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async(req, res) => {
     const { id } = req.params;
     const product = service.findOne(id);
 
@@ -37,22 +37,23 @@ router.post('/', (req, res) => {
         });
 });
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async(req, res) => {
     const { id } = req.params;
     const body = req.body;
-    res.json({
-        message: 'update',
-        data: body,
-        id,
-    });
+    try {
+        const product = await service.update(id, body);
+        res.status(201).json(product);
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async(req, res) => {
     const { id } = req.params;
-    res.json({
-        message: 'deleted',
-        id,
-    });
+    const rta = service.delete(id);
+    res.json(rta);
 });
 
 module.exports = router;
