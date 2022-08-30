@@ -36,19 +36,17 @@ class ProductService {
 
   find(filter) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (filter !== null) {
-          const filterList = [];
-          this.products.map((item) => { 
-            if(item.name === filter || item.price == filter) {
-                filterList.push(item);
-            }
-          });
-          resolve(filterList);
-        } else {
-          resolve(this.products);
-        }
-      }, 3000);
+      if (filter !== null) {
+        const filterList = [];
+        this.products.map((item) => { 
+          if(item.name === filter || item.price == filter) {
+              filterList.push(item);
+          }
+        });
+        resolve(filterList);
+      } else {
+        resolve(this.products);
+      }
     })
   }
 
