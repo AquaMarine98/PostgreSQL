@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/AquaMarine98/nodeAPIREST#readme",
   "dependencies": {
+    "@faker-js/faker": "^7.4.0",
     "@hapi/boom": "^10.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",

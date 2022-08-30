@@ -7,7 +7,7 @@ const { logErrors, errorHandler, boomErrorHandler } = require('./middleware/erro
 const app = express();
 const port = process.env.PORT || 3000;
 
-const whitelist = [ 'http://127.0.0.1:5500', 'http://localhost:3000' ];
+const whitelist = [ 'http://127.0.0.1:5500', 'http://localhost:3000', 'https://powerful-earth-37427.herokuapp.com' ];
 const options = {
     origin: (origin, callback) => {
         if(whitelist.includes(origin) ||  !origin) {
