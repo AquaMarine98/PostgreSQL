@@ -3,15 +3,14 @@ const useRouter = require('./routes');
 const cors = require('cors');
 
 const { logErrors, errorHandler, boomErrorHandler } = require('./middleware/error.handler');
-const { get } = require('./routes/products');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const whitelist = [ 'http://127.0.0.1:5500', 'http://localhost:3000' ];
 const options = {
     origin: (origin, callback) => {
-        if(whitelist.includes(origin)) {
+        if(whitelist.includes(origin) ||  !origin) {
             callback(null, true);
         } else {
             callback(new Error('No permitido'));
@@ -23,7 +22,7 @@ app.use(cors(options));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Hola, mi server en express en la version ' + version);
+    res.send('Hola, mi server en express');
 });
 
 useRouter(app);
