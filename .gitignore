@@ -105,3 +105,6 @@ dist
 
 #asd
 .DS_Store
+
+#Postgres
+postgres_data
