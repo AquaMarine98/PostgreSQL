@@ -7,11 +7,15 @@ const { createProductSchema, updateProductSchema, getProductSchema } = require('
 const router = express.Router();
 const service = new ProductService();
 
-router.get('/', async(req, res) => {
-    const filter = req.query.name || req.query.price || null;
-    const products = await service.find(filter);
+router.get('/', async(req, res, next) => {
+    try {
+        const filter = req.query.name || req.query.price || null;
+        const products = await service.find(filter);
 
-    res.json(products);
+        res.status(201).json(products);
+    } catch(err) {
+        next(err);
+    }
 });
 
 router.get('/:id', 
