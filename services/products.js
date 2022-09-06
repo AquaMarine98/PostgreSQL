@@ -2,6 +2,7 @@ const { faker } = require("@faker-js/faker");
 const boom = require("@hapi/boom");
 
 const sequelize = require("../libs/sequelize");
+const { models } = require("./../libs/sequelize");
 
 class ProductService {
   constructor() {
@@ -37,8 +38,7 @@ class ProductService {
   }
 
   async find(filter) {
-    const query = "SELECT * FROM tasks";
-    const [data] = await sequelize.query(query);
+    const rta = models.Product.findAll();
 
     const filterList = [];
     if(filter !== null) {
@@ -49,7 +49,7 @@ class ProductService {
       })
       return filterList;
     } else {
-      return data;
+      return rta;
     }
     
   }
