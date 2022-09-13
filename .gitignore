@@ -108,3 +108,4 @@ dist
 
 #Postgres
 postgres_data
+mysql_data
